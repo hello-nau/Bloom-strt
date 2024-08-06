@@ -10,14 +10,24 @@ public class User {
     private LocalDate cohortStartDate;
     private String username;
     private List<Authority> authorities;
+    private String password;
 
-    public User(LocalDate cohortStartDate, String username, List<Authority> authorities) {
+    public User(LocalDate cohortStartDate, String username, List<Authority> authorities, String password) {
         this.cohortStartDate = cohortStartDate;
         this.username = username;
         this.authorities = authorities;
+        this.password = password;
     }
 
     public User() {
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public long getId() {
