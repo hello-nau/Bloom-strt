@@ -1,13 +1,18 @@
 package com.hcc.entities;
 
+import javax.persistence.*;
 import java.util.Objects;
-
+@Entity
 public class Authority {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String authority;
+    @ManyToOne
     private User user;
 
     public Authority(String authority, User user) {
+
         this.authority = authority;
         this.user = user;
     }

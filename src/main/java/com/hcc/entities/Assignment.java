@@ -1,15 +1,20 @@
 package com.hcc.entities;
 
+import javax.persistence.*;
 import java.util.Objects;
-
+@Entity
 public class Assignment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String status;
     private Integer number;
     private String githubUrl;
     private String branch;
     private String reviewVideoUrl;
+    @ManyToOne
     private User user;
+    @ManyToOne
     private User codeReviewer;
 
     public Assignment(String status, Integer number, String githubUrl, String branch,
