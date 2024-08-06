@@ -1,20 +1,23 @@
 package com.hcc.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 public class User {
    private long id;
-    private Date cohortStartDate;
+    private LocalDate cohortStartDate;
     private String username;
     private List<Authority> authorities;
 
-    public User(long id, Date cohortStartDate, String username, List<Authority> authorities) {
-        this.id = id;
+    public User(LocalDate cohortStartDate, String username, List<Authority> authorities) {
         this.cohortStartDate = cohortStartDate;
         this.username = username;
         this.authorities = authorities;
+    }
+
+    public User() {
     }
 
     public long getId() {
@@ -25,11 +28,11 @@ public class User {
         this.id = id;
     }
 
-    public Date getCohortStartDate() {
+    public LocalDate getCohortStartDate() {
         return cohortStartDate;
     }
 
-    public void setCohortStartDate(Date cohortStartDate) {
+    public void setCohortStartDate(LocalDate cohortStartDate) {
         this.cohortStartDate = cohortStartDate;
     }
 
