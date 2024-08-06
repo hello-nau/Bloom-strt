@@ -23,24 +23,24 @@ public class User implements UserDetails {
     public User() {
     }
 
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
-//    public long getId() {
-//        return id;
-//    }
-//
-//    public void setId(long id) {
-//        this.id = id;
-//    }
-//
-//    public LocalDate getCohortStartDate() {
-//        return cohortStartDate;
-//    }
-//
-//    public void setCohortStartDate(LocalDate cohortStartDate) {
-//        this.cohortStartDate = cohortStartDate;
-//    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public LocalDate getCohortStartDate() {
+        return cohortStartDate;
+    }
+
+    public void setCohortStartDate(LocalDate cohortStartDate) {
+        this.cohortStartDate = cohortStartDate;
+    }
 @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> roles = new ArrayList<>();
