@@ -7,11 +7,11 @@ public class Authority {
     private String authority;
     private User user;
 
-    public Authority(long id, String authority, User user) {
-        this.id = id;
+    public Authority(String authority, User user) {
         this.authority = authority;
         this.user = user;
     }
+
 
     public long getId() {
         return id;
