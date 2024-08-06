@@ -9,9 +9,11 @@ package com.hcc.services;
 // import org.springframework.security.core.userdetails.UserDetailsService;
 // import org.springframework.security.core.userdetails.UsernameNotFoundException;
 //import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+ import org.springframework.security.core.GrantedAuthority;
+ import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+ import java.util.Collection;
+ import java.util.Optional;
 
 
 // uncomment this class once you have created all of the needed parts
@@ -50,6 +52,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.getPasswordEncoder().encode("asdfasdf"));
-        return user;
+
+        return new user;
     }
 }
