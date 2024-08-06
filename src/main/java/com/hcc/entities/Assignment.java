@@ -12,9 +12,8 @@ public class Assignment {
     private User user;
     private User codeReviewer;
 
-    public Assignment(long id, String status, Integer number, String githubUrl, String branch,
+    public Assignment(String status, Integer number, String githubUrl, String branch,
                       String reviewVideoUrl, User user, User codeReviewer) {
-        this.id = id;
         this.status = status;
         this.number = number;
         this.githubUrl = githubUrl;
@@ -22,6 +21,9 @@ public class Assignment {
         this.reviewVideoUrl = reviewVideoUrl;
         this.user = user;
         this.codeReviewer = codeReviewer;
+    }
+
+    public Assignment() {
     }
 
     public long getId() {
