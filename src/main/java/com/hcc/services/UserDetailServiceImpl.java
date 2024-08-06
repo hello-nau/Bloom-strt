@@ -53,6 +53,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
         user.setUsername(username);
         user.setPassword(passwordEncoder.getPasswordEncoder().encode("asdfasdf"));
 
-        return new user;
+        return user;
     }
 }
