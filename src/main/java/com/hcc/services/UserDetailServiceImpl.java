@@ -5,6 +5,7 @@ package com.hcc.services;
 // import com.hcc.utils.CustomPasswordEncoder;
 // import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.core.userdetails.UserDetails;
+ import com.hcc.repositories.UserRepository;
  import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.core.userdetails.UserDetailsService;
 // import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -45,14 +46,17 @@ package com.hcc.services;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
+//    @Autowired
+//    CustomPasswordEncoder passwordEncoder;
     @Autowired
-    CustomPasswordEncoder passwordEncoder;
+    UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.getPasswordEncoder().encode("asdfasdf"));
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        return userOpt.orElseThrow(() -> new UsernameNotFoundException("Invalid Credentials."));
+//        User user = new User();
+//        user.setUsername(username);
+//        user.setPassword(passwordEncoder.getPasswordEncoder().encode("asdfasdf"));
 
-        return user;
     }
 }
