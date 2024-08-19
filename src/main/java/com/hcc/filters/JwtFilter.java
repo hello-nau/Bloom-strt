@@ -1,7 +1,7 @@
 package com.hcc.filters;
 
 import com.hcc.repositories.UserRepository;
-import com.hcc.utils.JWTUtils;
+import com.hcc.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +27,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private UserRepository userRepo;
 
     @Autowired
-    private JWTUtils jwtUtil;
+    private JWTUtil jwtUtil;
 
 
     @Override
