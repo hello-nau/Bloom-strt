@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
-// this is an example controller feel free to delete this once you have created your own.
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
