@@ -21,6 +21,8 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
     testImplementation 'junit:junit:4.13.1'
 
+//	implementation 'org.springframework.security:spring-security-crypto:5.7.5' // Adjust version as needed
+
     runtimeOnly 'org.postgresql:postgresql'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
