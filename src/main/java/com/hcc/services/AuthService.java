@@ -1,17 +1,18 @@
 package com.hcc.services;
 
 
-import com.hcc.repositories.UserRepository;
-import java.util.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.hcc.entities.User;
 import org.springframework.stereotype.Service;
+
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Optional;
 
 // this is an example service feel free to delete this once you have created your own.
 @Service
-public class AuthService {
-    @Autowired
-    UserRepository userRepository;
+public interface AuthService {
 
+    Optional<String> authenticate(String username, String password);
 //    public AuthService greetLearner() {
 //
 //        String greeting = "VGltZTJDb2RlIQ==";

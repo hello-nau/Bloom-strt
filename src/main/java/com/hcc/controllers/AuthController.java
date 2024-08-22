@@ -6,7 +6,10 @@ import com.hcc.services.AuthService;
 import com.hcc.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 // this is an example controller feel free to delete this once you have created your own.
 @RestController
@@ -16,9 +19,13 @@ public class AuthController {
     private AuthService authService;
     @Autowired
     private JWTUtil jwtUtil;
+    @Autowired
+    UserDetails userDetails;
 
     @PostMapping("/login")
     public ResponseEntity<?> generateUserToken(@RequestBody AuthCredentialsRequest request) {
+        Optional<String> token = authService.authenticate(request.getUsername(), request.getPassword());
+
         return ResponseEntity.ok(new JWTUtil());
     }
     @PostMapping("/validate")
