@@ -4,6 +4,7 @@ package com.hcc.controllers;
 import com.hcc.controllers.requests.AuthCredentialsRequest;
 import com.hcc.controllers.responses.LoginResponse;
 import com.hcc.services.AuthService;
+import com.hcc.services.UserDetailServiceImpl;
 import com.hcc.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class AuthController {
     @Autowired
     private JWTUtil jwtUtil;
     @Autowired
-    UserDetails userDetails;
+    UserDetailServiceImpl userDetails;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody AuthCredentialsRequest request) {
@@ -34,7 +35,7 @@ public class AuthController {
     }
 
     @PostMapping("/validate")
-    public ResponseEntity<Map<String, Boolean>> validateToken(@RequestHeader("Autorization")
+    public ResponseEntity<Map<String, Boolean>> validateToken(@RequestHeader("Authorization")
                                                               String authorizationHeader) {
         if (authorizationHeader == null || authorizationHeader.startsWith("Bearer ")) {
             return ResponseEntity.badRequest().build();
@@ -44,7 +45,7 @@ public class AuthController {
     }
 
     private boolean isTokenValid(String token) {
-        return jwtUtil.validateToken(token, userDetails);
+        return jwtUtil.validateToken(token, userDetails.loadUserByUsername(jwtUtil.getUsernameFromToken(token)));
     }
 }
 
