@@ -1,6 +1,4 @@
 package com.hcc.controllers;
-
-
 import com.hcc.controllers.requests.AuthCredentialsRequest;
 import com.hcc.controllers.responses.LoginResponse;
 import com.hcc.services.AuthService;
@@ -9,7 +7,6 @@ import com.hcc.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;

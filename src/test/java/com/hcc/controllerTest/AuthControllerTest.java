@@ -1,10 +1,12 @@
-package com.hcc;
+package com.hcc.controllerTest;
 import com.hcc.controllers.AuthController;
 import com.hcc.controllers.requests.AuthCredentialsRequest;
 import com.hcc.controllers.responses.LoginResponse;
 import com.hcc.entities.User;
 import com.hcc.repositories.UserRepository;
-import org.junit.Test;
+//import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ import java.util.Map;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DataJpaTest
+//@SpringBootTest
 public class AuthControllerTest {
     @Autowired
     private AuthController authController;

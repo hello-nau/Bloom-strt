@@ -12,7 +12,6 @@ public class Authority {
     private User user;
 
     public Authority(String authority, User user) {
-
         this.authority = authority;
         this.user = user;
     }
