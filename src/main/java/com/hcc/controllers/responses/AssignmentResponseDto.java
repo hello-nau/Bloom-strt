@@ -3,6 +3,7 @@ package com.hcc.controllers.responses;
 import com.hcc.entities.Assignment;
 import com.hcc.enums.AssignmentEnum;
 import com.hcc.enums.AssignmentStatusEnum;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +13,7 @@ public class AssignmentResponseDto {
     private Assignment assignment;
     private AssignmentEnum[] assignmentEnums = AssignmentEnum.values();
     private AssignmentStatusEnum[] statusEnums = AssignmentStatusEnum.values();
-
+    @Autowired
     public AssignmentResponseDto(Assignment assignment) {
         this.assignment = assignment;
     }
