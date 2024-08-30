@@ -1,6 +1,7 @@
 package com.hcc.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hcc.enums.AuthorityEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -52,7 +53,7 @@ public class User implements UserDetails {
 @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> roles = new ArrayList<>();
-        roles.add((GrantedAuthority) new Authority("role_student", this));
+        roles.add((GrantedAuthority) new Authority(AuthorityEnum.ROLE_LEARNER, this));
         return roles;
     }
 @Override

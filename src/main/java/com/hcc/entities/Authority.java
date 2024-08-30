@@ -19,7 +19,6 @@ public class Authority {
         this.user = user;
     }
 
-
     public long getId() {
         return id;
     }
