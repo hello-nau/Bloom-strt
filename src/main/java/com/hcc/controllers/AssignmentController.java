@@ -14,14 +14,15 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.nio.file.AccessDeniedException;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/assignments")
 public class AssignmentController {
-    @Autowired
-    UserDetailServiceImpl userDetails;
+//    @Autowired
+//    UserDetailServiceImpl userDetails;
     @Autowired
     AssignmentService assignmentService;
     @GetMapping("/{id}")
@@ -77,8 +78,15 @@ public class AssignmentController {
     @PostMapping("/")
     public ResponseEntity<Assignment> addAssignment( @RequestBody Assignment assignment,
                                                      @AuthenticationPrincipal User user ) {
-        return ResponseEntity.ok(assignment);
+        assignment.setUser(user);
+
+        Assignment savedAssignment = assignmentService.saveAssignment(assignment);
+
+        return ResponseEntity
+                .created(URI.create("/api/assignments/" + savedAssignment.getId()))
+                .body(savedAssignment);
     }
+
 }
 // see if i can retrieve the user authentification this way?
 //        User user = (User) SecurityContextHolder
