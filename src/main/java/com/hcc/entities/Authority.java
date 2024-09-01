@@ -1,5 +1,7 @@
 package com.hcc.entities;
 
+import com.hcc.enums.AuthorityEnum;
+
 import javax.persistence.*;
 import java.util.Objects;
 @Entity
@@ -7,11 +9,11 @@ public class Authority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String authority;
+    private AuthorityEnum authority;
     @ManyToOne
     private User user;
 
-    public Authority(String authority, User user) {
+    public Authority(AuthorityEnum authority, User user) {
         this.authority = authority;
         this.user = user;
     }
@@ -25,11 +27,11 @@ public class Authority {
         this.id = id;
     }
 
-    public String getAuthority() {
+    public AuthorityEnum getAuthority() {
         return authority;
     }
 
-    public void setAuthority(String authority) {
+    public void setAuthority(AuthorityEnum authority) {
         this.authority = authority;
     }
 
