@@ -18,4 +18,9 @@ public class AssignmentService {
     public Assignment saveAssignment(Assignment assignment) {
         return assignmentRepository.save(assignment);
     }
+    public void deleteAssignment(Assignment assignment) {
+        //TODO add role check to delete
+        assignmentRepository.delete(assignment);
+    }
+
 }

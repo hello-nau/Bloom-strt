@@ -21,8 +21,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/assignments")
 public class AssignmentController {
-//    @Autowired
-//    UserDetailServiceImpl userDetails;
+
     @Autowired
     AssignmentService assignmentService;
     @GetMapping("/{id}")
