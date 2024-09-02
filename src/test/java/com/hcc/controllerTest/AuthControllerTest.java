@@ -5,6 +5,7 @@ import com.hcc.controllers.responses.LoginResponse;
 import com.hcc.entities.User;
 import com.hcc.repositories.UserRepository;
 //import org.junit.Test;
+import com.hcc.utils.CustomPasswordEncoder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,12 +27,13 @@ public class AuthControllerTest {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private CustomPasswordEncoder passwordEncoder;
 
     @BeforeEach
     public void setUp() {
         User user = new User();
-        user.setPassword(passwordEncoder.encode("password"));
+        PasswordEncoder encoder = passwordEncoder.getPasswordEncoder();
+        user.setPassword(encoder.encode("password"));
         user.setUsername("name");
         userRepository.save(user);
     }
@@ -40,6 +42,7 @@ public class AuthControllerTest {
     public void testLoginSuccess() {
         AuthCredentialsRequest request = new AuthCredentialsRequest("name", "password");
         ResponseEntity<LoginResponse> response = authController.login(request);
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody().getToken());
 

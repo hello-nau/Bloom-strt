@@ -34,7 +34,7 @@ public class AuthController {
     @PostMapping("/validate")
     public ResponseEntity<Map<String, Boolean>> validateToken(@RequestHeader("Authorization")
                                                               String authorizationHeader) {
-        if (authorizationHeader == null || authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             return ResponseEntity.badRequest().build();
         }
         String token = authorizationHeader.substring(7);
