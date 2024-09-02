@@ -23,4 +23,8 @@ public class UserService {
         user.setPassword(passwordEncoder.getPasswordEncoder().encode(password));
         userRepository.save(user);
     }
+    public void deleteUser(User user) {
+        //TODO add the role check so not everyone can delete a user
+        userRepository.delete(user);
+    }
 }

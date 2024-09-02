@@ -7,6 +7,7 @@ import com.hcc.repositories.UserRepository;
 //import org.junit.Test;
 import com.hcc.services.UserService;
 import com.hcc.utils.CustomPasswordEncoder;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,16 +34,20 @@ public class AuthControllerTest {
     UserService userService;
     @BeforeEach
     public void setUp() {
-        userService.createUser("nameTwo", "password");;
+        userService.createUser("name", "password");
+    }
+    @AfterEach
+    public void tearDown() {
+        userService.deleteUser(userRepository.findByUsername("name").get());
     }
     @Test
     public void testFindByUsername() {
-        Optional<User> foundUser = userRepository.findByUsername("nameOne");
+        Optional<User> foundUser = userRepository.findByUsername("name");
         assertTrue(foundUser.isPresent());
     }
     @Test
     public void testLoginSuccess() {
-        AuthCredentialsRequest request = new AuthCredentialsRequest("nameTwo", "password");
+        AuthCredentialsRequest request = new AuthCredentialsRequest("name", "password");
         ResponseEntity<LoginResponse> response = authController.login(request);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -57,7 +62,7 @@ public class AuthControllerTest {
     }
     @Test
     public void testValidateTokenValid() {
-        AuthCredentialsRequest request = new AuthCredentialsRequest("username", "password");
+        AuthCredentialsRequest request = new AuthCredentialsRequest("name", "password");
         ResponseEntity<LoginResponse> loginResponse = authController.login(request);
         String token = loginResponse.getBody().getToken();
         Map<String, Boolean> response = authController.validateToken("Bearer " + token).getBody();
@@ -65,7 +70,7 @@ public class AuthControllerTest {
     }
     @Test
     public void testValidateTokenInvalid() {
-        Map<String, Boolean> response = authController.validateToken("InvalidToken").getBody();
-        assertFalse(response.get("isValid"));
+        ResponseEntity<Map<String, Boolean>> response = authController.validateToken("InvalidToken");
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 }
