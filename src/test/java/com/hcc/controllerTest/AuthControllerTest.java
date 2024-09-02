@@ -5,9 +5,10 @@ import com.hcc.controllers.responses.LoginResponse;
 import com.hcc.entities.User;
 import com.hcc.repositories.UserRepository;
 //import org.junit.Test;
+import com.hcc.services.UserService;
 import com.hcc.utils.CustomPasswordEncoder;
 import org.junit.jupiter.api.Test;
-
+import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,19 +29,20 @@ public class AuthControllerTest {
     private UserRepository userRepository;
     @Autowired
     private CustomPasswordEncoder passwordEncoder;
-
+    @Autowired
+    UserService userService;
     @BeforeEach
     public void setUp() {
-        User user = new User();
-        PasswordEncoder encoder = passwordEncoder.getPasswordEncoder();
-        user.setPassword(encoder.encode("password"));
-        user.setUsername("name");
-        userRepository.save(user);
+        userService.createUser("nameTwo", "password");;
     }
-
+    @Test
+    public void testFindByUsername() {
+        Optional<User> foundUser = userRepository.findByUsername("nameOne");
+        assertTrue(foundUser.isPresent());
+    }
     @Test
     public void testLoginSuccess() {
-        AuthCredentialsRequest request = new AuthCredentialsRequest("name", "password");
+        AuthCredentialsRequest request = new AuthCredentialsRequest("nameTwo", "password");
         ResponseEntity<LoginResponse> response = authController.login(request);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
