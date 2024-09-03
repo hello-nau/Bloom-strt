@@ -30,7 +30,7 @@ public class AuthController {
     public ResponseEntity<LoginResponse> login(@RequestBody AuthCredentialsRequest request) {
         Optional<String> token = authService.authenticate(request.getUsername(), request.getPassword());
         if (token.isEmpty()) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-
+        System.out.println(" KEK KEK " + jwtUtil.getExpirationDateFromToken(token.get()));
         return ResponseEntity.ok(new LoginResponse(token.get()));
     }
     @PostMapping("/register")
