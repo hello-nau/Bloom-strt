@@ -6,6 +6,8 @@ import com.hcc.utils.CustomPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     @Autowired
@@ -14,6 +16,12 @@ public class UserService {
     @Autowired
     private CustomPasswordEncoder passwordEncoder;
 
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+    public Optional<User> getUser(String username) {
+        return Optional.of(userRepository.findByUsername(username).get());
+    }
     public void createUser(String username, String password) {
         User user = new User();
         if(userRepository.findByUsername(username).isPresent()) {
