@@ -41,6 +41,7 @@ public class AssignmentController {
         if(existingAssignment.isEmpty()) {
             throw new ResourceNotFoundException("The assignment with the id " + assignmentId + " was not found.");
         }
+        //TODO check also if the role of the user is reviewer for this assignment
         if(!existingAssignment.get().getUser().equals(user)) {
             throw new AccessDeniedException("You are not authorized to edit this assignment.");
         }

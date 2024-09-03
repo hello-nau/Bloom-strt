@@ -6,6 +6,7 @@ import com.hcc.controllers.responses.AssignmentResponseDto;
 import com.hcc.controllers.responses.LoginResponse;
 import com.hcc.entities.Assignment;
 import com.hcc.entities.User;
+import com.hcc.enums.AssignmentStatusEnum;
 import com.hcc.exceptions.ResourceNotFoundException;
 import com.hcc.repositories.AssignmentRepository;
 import com.hcc.repositories.UserRepository;
@@ -24,6 +25,8 @@ import org.springframework.http.ResponseEntity;
 import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.nio.file.AccessDeniedException;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -59,6 +62,7 @@ public class AssignmentControllerTest {
 
         Assignment assignment = new Assignment();
         assignment.setUser(userRepository.findByUsername("testUser").get());
+        assignment.setStatus(AssignmentStatusEnum.PENDING_SUBMISSION);
         assignmentService.saveAssignment(assignment);
         assignmentId = assignment.getId();
 
@@ -93,8 +97,55 @@ public class AssignmentControllerTest {
 
     @Test
     @Transactional
-    public void testEditAssignmentById() {
+    public void testEditAssignmentById() throws AccessDeniedException {
         User user = userService.getUser("testUser").get();
+        Assignment updatedAssignment = new Assignment();
+
+        updatedAssignment.setStatus(AssignmentStatusEnum.SUBMITTED);
+        assignmentController.editAssignmentById(assignmentId, updatedAssignment, user);
+
+        assertEquals(assignmentService.findAssignmentById(assignmentId).get().getStatus(),
+                AssignmentStatusEnum.SUBMITTED);
+    }
+
+    @Test
+    @Transactional
+    public void testEditAssignmentByIdAccessDenied() throws AccessDeniedException {
+        userService.createUser("tuser", "password");
+        User user = userService.getUser("tuser").get();
+
+        Assignment updatedAssignment = new Assignment();
+        updatedAssignment.setStatus(AssignmentStatusEnum.SUBMITTED);
+
+        assertThrows(AccessDeniedException.class, () -> {
+            assignmentController.editAssignmentById(assignmentId, updatedAssignment, user);
+        });
+    }
+    @Test
+    @Transactional
+    public void testEditAssignmentByIdResourceNotFound() throws AccessDeniedException {
+        User user = userService.getUser("testUser").get();
+
+        Assignment updatedAssignment = new Assignment();
+        updatedAssignment.setStatus(AssignmentStatusEnum.SUBMITTED);
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            assignmentController.editAssignmentById(123L, updatedAssignment, user);
+        });
+    }
+
+    @Test
+    @Transactional
+    public void addAssignment() {
+        User user = userService.getUser("testUser").get();
+        Assignment assignment = new Assignment();
+        assignment.setStatus(AssignmentStatusEnum.SUBMITTED);
+        ResponseEntity<Assignment> response  = assignmentController.addAssignment(assignment, user);
+
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(assignment.getStatus(), AssignmentStatusEnum.SUBMITTED);
+        assertEquals(user.getId(), response.getBody().getUser().getId());
     }
 
     private HttpHeaders createHeaders(String authToken) {

@@ -1,5 +1,7 @@
 package com.hcc.entities;
 
+import com.hcc.enums.AssignmentStatusEnum;
+
 import javax.persistence.*;
 import java.util.Objects;
 @Entity
@@ -7,7 +9,7 @@ public class Assignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String status;
+    private AssignmentStatusEnum status;
     private Integer number;
     private String githubUrl;
     private String branch;
@@ -17,7 +19,7 @@ public class Assignment {
     @ManyToOne
     private User codeReviewer;
 
-    public Assignment(String status, Integer number, String githubUrl, String branch,
+    public Assignment(AssignmentStatusEnum status, Integer number, String githubUrl, String branch,
                       String reviewVideoUrl, User user, User codeReviewer) {
         this.status = status;
         this.number = number;
@@ -39,11 +41,11 @@ public class Assignment {
         this.id = id;
     }
 
-    public String getStatus() {
+    public AssignmentStatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(AssignmentStatusEnum status) {
         this.status = status;
     }
 
