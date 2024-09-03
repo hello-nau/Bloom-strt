@@ -55,6 +55,7 @@ public class User implements UserDetails {
         List<GrantedAuthority> roles = new ArrayList<>();
         roles.add((GrantedAuthority) new Authority(AuthorityEnum.ROLE_LEARNER, this));
         return roles;
+//    return authorities;
     }
 @Override
 public String getPassword() {

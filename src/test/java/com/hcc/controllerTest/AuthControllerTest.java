@@ -18,6 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.transaction.Transactional;
 import java.util.Map;
 
 
@@ -34,20 +36,20 @@ public class AuthControllerTest {
     UserService userService;
     @BeforeEach
     public void setUp() {
-        userService.createUser("name", "password");
+        userService.createUser("test_name", "password");
     }
     @AfterEach
     public void tearDown() {
-        userService.deleteUser(userRepository.findByUsername("name").get());
+        userService.deleteUser(userRepository.findByUsername("test_name").get());
     }
     @Test
     public void testFindByUsername() {
-        Optional<User> foundUser = userRepository.findByUsername("name");
+        Optional<User> foundUser = userRepository.findByUsername("test_name");
         assertTrue(foundUser.isPresent());
     }
     @Test
     public void testLoginSuccess() {
-        AuthCredentialsRequest request = new AuthCredentialsRequest("name", "password");
+        AuthCredentialsRequest request = new AuthCredentialsRequest("test_name", "password");
         ResponseEntity<LoginResponse> response = authController.login(request);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -62,7 +64,7 @@ public class AuthControllerTest {
     }
     @Test
     public void testValidateTokenValid() {
-        AuthCredentialsRequest request = new AuthCredentialsRequest("name", "password");
+        AuthCredentialsRequest request = new AuthCredentialsRequest("test_name", "password");
         ResponseEntity<LoginResponse> loginResponse = authController.login(request);
         String token = loginResponse.getBody().getToken();
         Map<String, Boolean> response = authController.validateToken("Bearer " + token).getBody();

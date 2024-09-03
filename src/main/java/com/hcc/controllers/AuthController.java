@@ -42,6 +42,7 @@ public class AuthController {
     @PostMapping("/validate")
     public ResponseEntity<Map<String, Boolean>> validateToken(@RequestHeader("Authorization")
                                                               String authorizationHeader) {
+        System.out.println("KEK " + authorizationHeader);
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             return ResponseEntity.badRequest().build();
         }
