@@ -3,6 +3,7 @@ import com.hcc.controllers.requests.AuthCredentialsRequest;
 import com.hcc.controllers.responses.LoginResponse;
 import com.hcc.services.AuthService;
 import com.hcc.services.UserDetailServiceImpl;
+import com.hcc.services.UserService;
 import com.hcc.utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,9 @@ public class AuthController {
     @Autowired
     private JWTUtil jwtUtil;
     @Autowired
-    UserDetailServiceImpl userDetails;
+    private UserDetailServiceImpl userDetails;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody AuthCredentialsRequest request) {
@@ -29,6 +32,11 @@ public class AuthController {
         if (token.isEmpty()) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 
         return ResponseEntity.ok(new LoginResponse(token.get()));
+    }
+    @PostMapping("/register")
+    public ResponseEntity<Void> registerNewUser(@RequestBody AuthCredentialsRequest request) {
+        userService.createUser(request.getUsername(), request.getPassword());
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/validate")
