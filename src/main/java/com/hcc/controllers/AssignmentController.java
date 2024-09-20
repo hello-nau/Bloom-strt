@@ -25,7 +25,7 @@ public class AssignmentController {
     @Autowired
     AssignmentService assignmentService;
     @GetMapping("/{id}")
-    public ResponseEntity<AssignmentResponseDto> getAssignmentById(@PathVariable Long assignmentId,
+    public ResponseEntity<AssignmentResponseDto> getAssignmentById(@PathVariable("id") Long assignmentId,
                                                                    @AuthenticationPrincipal User user) {
         Optional<Assignment> assignment = assignmentService.findAssignmentById(assignmentId);
         if(assignment.isEmpty()) {
@@ -35,16 +35,16 @@ public class AssignmentController {
         return ResponseEntity.ok(new AssignmentResponseDto(assignment.get()));
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Void> editAssignmentById(@PathVariable Long assignmentId, @RequestBody Assignment updatedAssignment,
+    public ResponseEntity<Void> editAssignmentById(@PathVariable("id") Long assignmentId, @RequestBody Assignment updatedAssignment,
                                    @AuthenticationPrincipal User user) throws AccessDeniedException {
         Optional<Assignment> existingAssignment = assignmentService.findAssignmentById(assignmentId);
         if(existingAssignment.isEmpty()) {
             throw new ResourceNotFoundException("The assignment with the id " + assignmentId + " was not found.");
         }
         //TODO check also if the role of the user is reviewer for this assignment
-        if(!existingAssignment.get().getUser().equals(user)) {
-            throw new AccessDeniedException("You are not authorized to edit this assignment.");
-        }
+//        if(!existingAssignment.get().getUser().equals(user)) {
+//            throw new AccessDeniedException("You are not authorized to edit this assignment.");
+//        }
         existingAssignment.get().setStatus(updatedAssignment.getStatus());
         existingAssignment.get().setNumber(updatedAssignment.getNumber());
         existingAssignment.get().setGithubUrl(updatedAssignment.getGithubUrl());
